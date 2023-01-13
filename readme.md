@@ -60,7 +60,6 @@ module "server" {
 
   source  = "./server" // nome do modulo
   servers = 1 // input que o root module impõe ao child module server
-
 }
 ```
 
@@ -89,7 +88,6 @@ O bloco do backend fica dentro do bloco do Terraform e normalmente eles são def
     bucket = "aws-linux-tips"
     key    = "terraform-test.tfstate"
     region = "us-east-1"
-
   }
 ```   
 
@@ -105,7 +103,7 @@ State Locking, é um recurso do backend que grava as informações do __.tfstate
 
 ```ruby
   backend "s3" {
-    
+
     // nome da tabela que pode ser visto no arquivo dynamodb.tf
 
     dynamodb_table = "terraform-state-lock-dynamo" 
@@ -115,4 +113,8 @@ State Locking, é um recurso do backend que grava as informações do __.tfstate
   }
 ```
 
-Para manter o banco e não destruí-lo devemos informar o parâmetro `-lock=false` em `terraform destroy -lock=false`. Para fazer um novo plan `terraform plan -lock=false "plano"`. Para applicar o plano `terraform destroy -lock=false "plano"`.
+Para manter o banco e não destruí-lo devemos informar o parâmetro `-lock=false` em `terraform destroy -lock=false`. Para fazer um novo plan `terraform plan -lock=false "plano"`. Para applicar o plano `terraform destroy -lock=false "plano"`.  
+
+### State   
+
+State é a maneira que o Terraform armazena as informações da infraestrutura. Por padrão, ele é gerado o arquivo `terrafrom.tfstate`. 
