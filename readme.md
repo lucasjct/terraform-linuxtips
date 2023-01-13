@@ -103,9 +103,12 @@ O bloco do backend fica dentro do bloco do Terraform e normalmente eles são def
 
 State Locking, é um recurso do backend que grava as informações do __.tfstate__ no banco de dados DynamoDB da AWS. O arquivo fica protegido e bloqueia o uso em paralelo caso alguma operação esteja em curso. Além disso, toda informação de log fica registrada no DynamoDB.  Após configurarmos o bloco resource do banco, devemos informar o nome da tabela no bloco backend como valor de `dynamodb_table`. Como mostrar abaixo: 
 
-```
+```ruby
   backend "s3" {
-    dynamodb_table = "terraform-state-lock-dynamo" // nome da tabela que pode ser visto no arquivo dynamodb.tf
+    
+    // nome da tabela que pode ser visto no arquivo dynamodb.tf
+
+    dynamodb_table = "terraform-state-lock-dynamo" 
     bucket = "aws-linux-tips"
     key    = "terraform-test.tfstate"
     region = "us-east-1"
