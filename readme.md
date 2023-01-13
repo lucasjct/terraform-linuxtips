@@ -115,6 +115,16 @@ State Locking, é um recurso do backend que grava as informações do __.tfstate
 
 Para manter o banco e não destruí-lo devemos informar o parâmetro `-lock=false` em `terraform destroy -lock=false`. Para fazer um novo plan `terraform plan -lock=false "plano"`. Para applicar o plano `terraform destroy -lock=false "plano"`.  
 
-### State   
+### State  
 
-State é a maneira que o Terraform armazena as informações da infraestrutura. Por padrão, ele é gerado o arquivo `terrafrom.tfstate`. 
+* Documentação: https://developer.hashicorp.com/terraform/language/state
+
+State é a maneira que o Terraform armazena as informações da infraestrutura. Por padrão, ele é gerado o arquivo `terrafrom.tfstate`.  
+
+terraform não funciona sem state. Por que ele existe? 
+
+* Serve para mapear o cloud provider (o mundo real).     
+* Metada, os metadados estão dentro do state e servem para trackear recursos e dependências.    
+* O State pode servir como um mini cache que aumenta a performance na criação da infraestrutura (para infraestruturas maiores podemos passar a tag `-refresh=false` no cli para não precisar carregar tudo de novo).    
+`terraform refresh` - Caso seja realizado alguma modificação manual no cloud provider, com esse comando, o terraform vai na cloud, mapeia a alteração e o arquivo state é atualizado.   
+* Sincronia, quando temos várias pessoas estão manipulando o mesmo recurso, quando utilizamos o __remote state__, não há necessidade de fazer o refresh de todo state novamente, cada pessoa terá uma cópia da última modificação no Terraform.   
