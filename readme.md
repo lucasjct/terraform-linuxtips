@@ -39,7 +39,7 @@ https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 
 
 * Definições de variáveis no Terrform  
-https://developer.hashicorp.com/terraform/language/values  
+Documentação: https://developer.hashicorp.com/terraform/language/values  
 
 
 ### Como funcionam as chamadas para API da AWS com Terraform   
@@ -53,7 +53,7 @@ https://developer.hashicorp.com/terraform/language/values
 ## Day - 2  
 
 * Modules Terraform  
-https://developer.hashicorp.com/terraform/language/modules/develop   
+Documentação: https://developer.hashicorp.com/terraform/language/modules/develop   
 
 Quando trabalhamos com módulos, cada diretório será um módulo. É importante sempre manter o arquivo `main.tf` (que contém os blocos __terraform__ e __backend__) dentro da raiz (fora de módulos) para não termos problemas, ele é o root module. O módulo é como se fosse um classe, ele encapsula os demais recursos.    
 
@@ -82,7 +82,7 @@ output "ip_address" {
 
 O Backend define o local em que o Terraform armazenará os dados do arquivo __state__.
 
-https://developer.hashicorp.com/terraform/language/settings/backends/configuration  
+Documentação: https://developer.hashicorp.com/terraform/language/settings/backends/configuration  
 
 O bloco do backend fica dentro do bloco do Terraform e normalmente eles são definidos no arquivo main.tf. Exemplo de backend utilizando o S3 da AWS:
 
@@ -133,13 +133,13 @@ terraform não funciona sem state. Por que ele existe?
 `terraform refresh` - Caso seja realizado alguma modificação manual no cloud provider, com esse comando, o terraform vai na cloud, mapeia a alteração e o arquivo state é atualizado.   
 * Sincronia, quando temos várias pessoas estão manipulando o mesmo recurso, quando utilizamos o __remote state__, não há necessidade de fazer o refresh de todo state novamente, cada pessoa terá uma cópia da última modificação no Terraform.   
 
-O Terraform possui outras opções na linha de comando para manipular o tstate. Eles são: `terraform state <opções abaixo>` :
-  * `list`
-	* `mv`
-	* `pull`
-	* `push`
-	* `rm`
-	* `show`
+O Terraform possui outras opções na linha de comando para manipular o tstate. Eles são: `terraform state <opções abaixo>` :  
+* `list`
+* `mv`
+* `pull`
+* `push`
+* `rm`
+* `show`
 
 Cada manipulação de escrita que fazemos no terraform state, automaticamente é gerado um backup. Entre todos os comandos, o `terraform state rm` precisa ser usado com cautela, pois ele não se equivale ao `terraform destroy`, ele removerá as informações do tfstate, então perderemos todas informações sobre os recursos neste arquivo, consequentemente a remoção dos recursos terá que ser manual no console do provider.   
 
@@ -157,4 +157,19 @@ obs: sempre no final da documentação de um resource, há tbm a linha de como i
 
 ### Workspace   
 
-Workspace é uma configuração que fazemos no __state__.
+Documentação: https://developer.hashicorp.com/terraform/language/state/workspaces
+
+Workspace é uma configuração que fazemos no __state__. Ele trabalha apenas a nível de state. Quando criamos workspaces, cada um deles será como um novo ambiente e terá um __state__ e um diretório distinto no S3 Bucket chamada de __env__.   
+
+É normal que se coloque cada workspace em uma região diferente.  
+
+Comandos:  
+
+* Para criar um novo workspace:   
+`terraform workspace new <nome do workspace>`  
+
+* Para listar os workspace criados:  
+`terraform workspace list`   
+
+* Para mudar de workspace  
+`terraform workspace select <nome do workspace>`
