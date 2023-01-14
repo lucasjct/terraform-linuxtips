@@ -1,3 +1,7 @@
+# Terraform 
+
+### Executar com Docker
+
 docker run -it -v /c/Users/AS/workspace/terraform-linuxtips:/app -w /app --entrypoint  hashicorp/terraform:light sh
 
 ## Day - 1
@@ -128,3 +132,29 @@ terraform não funciona sem state. Por que ele existe?
 * O State pode servir como um mini cache que aumenta a performance na criação da infraestrutura (para infraestruturas maiores podemos passar a tag `-refresh=false` no cli para não precisar carregar tudo de novo).    
 `terraform refresh` - Caso seja realizado alguma modificação manual no cloud provider, com esse comando, o terraform vai na cloud, mapeia a alteração e o arquivo state é atualizado.   
 * Sincronia, quando temos várias pessoas estão manipulando o mesmo recurso, quando utilizamos o __remote state__, não há necessidade de fazer o refresh de todo state novamente, cada pessoa terá uma cópia da última modificação no Terraform.   
+
+O Terraform possui outras opções na linha de comando para manipular o tstate. Eles são: `terraform state <opções abaixo>` :
+  * `list`
+	* `mv`
+	* `pull`
+	* `push`
+	* `rm`
+	* `show`
+
+Cada manipulação de escrita que fazemos no terraform state, automaticamente é gerado um backup. Entre todos os comandos, o `terraform state rm` precisa ser usado com cautela, pois ele não se equivale ao `terraform destroy`, ele removerá as informações do tfstate, então perderemos todas informações sobre os recursos neste arquivo, consequentemente a remoção dos recursos terá que ser manual no console do provider.   
+
+### Terraform import    
+
+Documentação: https://developer.hashicorp.com/terraform/cli/commands/import
+
+Caso queira importar um recurso e obter as informações para colocar como expressão do bloco resource desejado, posso utilizar o terrafor state para obter os nomes e parâmetros dos recursos desejados. Para isso utilizo:  
+`terraform state pull > testando_impor.tfstate`  
+
+Após isso, abro o arquivo e procuro pelas informações requeridas no resource.  
+
+obs: sempre no final da documentação de um resource, há tbm a linha de como importá-lo.  
+
+
+### Workspace   
+
+Workspace é uma configuração que fazemos no __state__.
