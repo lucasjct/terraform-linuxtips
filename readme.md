@@ -172,4 +172,18 @@ Comandos:
 `terraform workspace list`   
 
 * Para mudar de workspace  
-`terraform workspace select <nome do workspace>`
+`terraform workspace select <nome do workspace>`  
+
+## Day - 3  
+
+Documentação e recursos para conseguir ajuda no Terraform.  
+
+* Para linha de comando (CLI), podemos conseguir ajuda através da [documentação](https://developer.hashicorp.com/terraform/cli/commands) no próprio terminal, utilizando o comando:  
+  *  `terraform -h`  
+  * `terraform <subcomando> -h` Exemplo: `terraform plan -h`  
+
+* Para instalar o autocomplete na linha de comando:   
+  * `terraform -install-autocomplete` 
+
+Para acessar ajuda de como trabalhar com os blocos de recursos dos providers, podemos fazer o seguinte caminho: __ds__
+
