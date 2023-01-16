@@ -185,5 +185,7 @@ Documentação e recursos para conseguir ajuda no Terraform.
 * Para instalar o autocomplete na linha de comando:   
   * `terraform -install-autocomplete` 
 
-Para acessar ajuda de como trabalhar com os blocos de recursos dos providers, podemos fazer o seguinte caminho: __ds__
+Para acessar ajuda de como trabalhar com os blocos de recursos dos providers, podemos procurar por *registry* através do seguinte caminho: __https://registry.terraform.io/browse/providers__ . Aparecerá uma lista de cloud providers, entre eles podemos escolher aquele que desejamos montar a infraestrutura.  
+
+Importante saber por distinção, que temos a documentação da HCL (HashiCorp Language), a documentação do Terraform e a dos registry que nos mostra como trabalhar com os providers.
 
