@@ -187,5 +187,17 @@ Documentação e recursos para conseguir ajuda no Terraform.
 
 Para acessar ajuda de como trabalhar com os blocos de recursos dos providers, podemos procurar por *registry* através do seguinte caminho: __https://registry.terraform.io/browse/providers__ . Aparecerá uma lista de cloud providers, entre eles podemos escolher aquele que desejamos montar a infraestrutura.  
 
-Importante saber por distinção, que temos a documentação da HCL (HashiCorp Language), a documentação do Terraform e a dos registry que nos mostra como trabalhar com os providers.
+Importante saber por distinção, que temos a documentação da HCL (HashiCorp Language), a documentação do Terraform e a dos registry que nos mostra como trabalhar com os providers.  
 
+
+### Terraform Debugging
+
+https://developer.hashicorp.com/terraform/internals/debugging  
+
+Variável de ambiente: `TF_LOG`  
+Como utilizar:  
+`TF_LOG=DEBUG terraform plan -out plano`   
+* Posso utilizar o `TF_LOG=DEBUG` em cada comando. Exemplo:  
+  * `TF_LOG=DEBUG terraform apply`  
+
+Posso passar como valor de `TF_LOG` os seguintes parâmetros: `TRACE`, `DEBUG`, `INFO`, `WARN` e `ERROR`. __Do \_*trace*\_ para *error* vai diminuindo o nível de informação no conseole.__ 

@@ -37,7 +37,7 @@ resource "aws_instance" "instance_web2" {
   tags = {
     "Name" = "dependecy"
   }
- // dependência explicita
+  // dependência explicita
   depends_on = [aws_instance.instance_web]
 
 }
