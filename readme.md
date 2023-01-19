@@ -204,7 +204,7 @@ Como utilizar:
 
 O resultado será o log com as chamadas e respostas da api do provider através do protocolo http.  
 
-Posso passar como valor de `TF_LOG` os seguintes parâmetros: `TRACE`, `DEBUG`, `INFO`, `WARN` e `ERROR`. __Do \_*trace*\_ para *error* vai diminuindo o nível de informação no conseole.__   
+Posso passar como valor de `TF_LOG` os seguintes parâmetros: `TRACE`, `DEBUG`, `INFO`, `WARN` e `ERROR`. __Do *trace* para *error* vai diminuindo o nível de informação no console.__   
 
 
 ### Comando Terraform Taint
@@ -218,12 +218,13 @@ Exemplo de como passar o comando:  `terraform taint aws_instance.web[0]`.
 
 ### Comando Graph  
 
-Documentação: https://developer.hashicorp.com/terraform/cli/commands/graph  
+Documentação: https://developer.hashicorp.com/terraform/cli/commands/graph    
+Instalação do Graphviz: http://www.graphviz.org/download/
 
 Exemplo de comando:  
 
 * `terraform graph | dot -Tsvg > graph.svg`   
 
-Após a instalação correta do Graphiz, será gerado um arquivo .svg no diretório padrão. Nele, será possível verificar o diagrama em grafos da infraestrutura montada no arquivo.   
+Após a instalação correta do Graphviz, será gerado um arquivo .svg no diretório padrão. Nele, será possível verificar o diagrama em grafos da infraestrutura montada no arquivo.    
 
 ![img](./img/graph.png)
