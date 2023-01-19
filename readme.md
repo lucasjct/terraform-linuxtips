@@ -192,12 +192,38 @@ Importante saber por distinção, que temos a documentação da HCL (HashiCorp L
 
 ### Terraform Debugging
 
-https://developer.hashicorp.com/terraform/internals/debugging  
+Documentação: https://developer.hashicorp.com/terraform/internals/debugging  
 
 Variável de ambiente: `TF_LOG`  
 Como utilizar:  
 `TF_LOG=DEBUG terraform plan -out plano`   
-* Posso utilizar o `TF_LOG=DEBUG` em cada comando. Exemplo:  
-  * `TF_LOG=DEBUG terraform apply`  
+* Posso utilizar o `TF_LOG=DEBUG` em cada comando. Exemplo:
+  * `TF_LOG=DEBUG terraform plan`  
+  * `TF_LOG=DEBUG terraform apply` 
+  * `TF_LOG=DEBUG terraform destroy`   
 
-Posso passar como valor de `TF_LOG` os seguintes parâmetros: `TRACE`, `DEBUG`, `INFO`, `WARN` e `ERROR`. __Do \_*trace*\_ para *error* vai diminuindo o nível de informação no conseole.__ 
+O resultado será o log com as chamadas e respostas da api do provider através do protocolo http.  
+
+Posso passar como valor de `TF_LOG` os seguintes parâmetros: `TRACE`, `DEBUG`, `INFO`, `WARN` e `ERROR`. __Do \_*trace*\_ para *error* vai diminuindo o nível de informação no conseole.__   
+
+
+### Comando Terraform Taint
+
+Documentação: https://developer.hashicorp.com/terraform/cli/commands/taint  
+
+Com o `terraform taint` posso marcar um recurso para ser destruído no state e reconstruído na próxima vez que rodar um `terraform plan` e `terrafrom apply`. O resultado do comando nãoé destruição do recurso, é para que apenas depois do plan e do apply seja destruído e recriado. Podemos utilizar se um recursos não estiver funcionando corretamente e precisamos marcalo para que da próxima vez seja reconstruído.   
+
+Exemplo de como passar o comando:  `terraform taint aws_instance.web[0]`.    
+
+
+### Comando Graph  
+
+Documentação: https://developer.hashicorp.com/terraform/cli/commands/graph  
+
+Exemplo de comando:  
+
+* `terraform graph | dot -Tsvg > graph.svg`   
+
+Após a instalação correta do Graphiz, será gerado um arquivo .svg no diretório padrão. Nele, será possível verificar o diagrama em grafos da infraestrutura montada no arquivo.   
+
+![img](./img/graph.png)
