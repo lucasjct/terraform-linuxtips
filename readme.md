@@ -228,3 +228,38 @@ Exemplo de comando:
 Após a instalação correta do Graphviz, será gerado um arquivo .svg no diretório padrão. Nele, será possível verificar o diagrama em grafos da infraestrutura montada no arquivo.    
 
 ![img](./img/graph.png)
+
+
+### Comando Terraform fmt
+
+Documentação: https://developer.hashicorp.com/terraform/cli/commands/fmt    
+
+Convenção de boas práticas e estilo aplicadas pelo `terraform fmt` estão dentro da seguinte documentação: https://developer.hashicorp.com/terraform/language/syntax/style   
+
+Exemplo de como aplicar o comando:  
+
+* Para apenas verificar arquivos que podem sofrer alterações na formatação, mas não realizar mudanças neste arquivo:  
+  *  `terraform fmt -check` 
+  * `echo $!` (A saída deste comando bash deve 0 que sempre significa sucesso)    
+
+* Para verificar o arquivo e o tipo de mudança que poderá ser aplicada:   
+   * `terraform fmt -check -diff`
+   *  `echo $!`   
+
+* Para aplicar as mudanças sugeridas basta remover o `-check`:  
+  * `Terraform fmt`
+  * `echo $!`
+
+
+__OBS__: O comando `echo $!` está sendo inserido, mas não é obrigatório. É apenas pra lembrar que ao usar os comandos do `terraform fmt` na pipline, a saída deve ser 0. Caso não, a pipeline vai falhar.   
+
+### Terraform validate  
+
+Documentação: https://developer.hashicorp.com/terraform/cli/commands/validate
+
+Comando importante para usar o código Terraform no CI. Recomenda-se que utilizemos no início do CI para 'logo de cara' validar o código. Esse comando identifica erro de sintaxe no código e se a configuração é válida.  
+
+Exemplo de execução básica:  
+
+`terraform validate`
+
