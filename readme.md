@@ -211,7 +211,7 @@ Posso passar como valor de `TF_LOG` os seguintes parâmetros: `TRACE`, `DEBUG`, 
 
 Documentação: https://developer.hashicorp.com/terraform/cli/commands/taint  
 
-Com o `terraform taint` posso marcar um recurso para ser destruído no state e reconstruído na próxima vez que rodar um `terraform plan` e `terrafrom apply`. O resultado do comando nãoé destruição do recurso, é para que apenas depois do plan e do apply seja destruído e recriado. Podemos utilizar se um recursos não estiver funcionando corretamente e precisamos marcalo para que da próxima vez seja reconstruído.   
+Com o `terraform taint` posso marcar um recurso para ser destruído no state e __reconstruído__ na próxima vez que rodar um `terraform plan` e `terrafrom apply`. O resultado do comando nãoé destruição do recurso, é para que apenas depois do plan e do apply seja destruído e recriado. Podemos utilizar se um recursos não estiver funcionando corretamente e precisamos marcalo para que da próxima vez seja reconstruído.   
 
 Exemplo de como passar o comando:  `terraform taint aws_instance.web[0]`.    
 
@@ -219,7 +219,9 @@ Exemplo de como passar o comando:  `terraform taint aws_instance.web[0]`.
 ### Comando Graph  
 
 Documentação: https://developer.hashicorp.com/terraform/cli/commands/graph    
-Instalação do Graphviz: http://www.graphviz.org/download/
+Instalação do Graphviz: http://www.graphviz.org/download/  
+
+__OBS:Este comando exibe a dependências entre os recursos.__
 
 Exemplo de comando:  
 
