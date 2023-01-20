@@ -263,5 +263,52 @@ Comando importante para usar o código Terraform no CI. Recomenda-se que utilize
 
 Exemplo de execução básica:  
 
-`terraform validate`
+`terraform validate`   
+
+
+## Day - 4 
+
+### Conditionals  
+
+Documentação: https://developer.hashicorp.com/terraform/language/expressions/conditionals
+
+Exemplo de condicionais com Terraform dentro da variável `count` no código abaixo:  
+
+```ruby
+resource "aws_instance" "instance_web" {
+
+  # exemplo de condicional com Terraform    
+
+  // count = var.environment == "production" ? 2 : 1  
+  // count = var.environment == "production" ? 2 + var.plus : 1  
+  // count = var.production ? 2 : 1  // outra forma de expressar a primeira condição  
+  count         = !var.production ? 2 : 1 // aqui pergunta se o valor de production e diferente de true, como é, subirá 2 instâncias
+  ami           = data.aws_ami.server-ubuntu.id  
+
+  // count.index é utilizado para verificar o índice criado dentro da variável. Para cada índice, temos uma instância aws. 
+
+  instance_type = count.index > 1 ? "t2.micro" : "t3.medium"
+  tags = {
+    "Name" = "dependecy"
+  }
+
+}
+```
+
+Para visualizarmos mais de perto. As condicionais são as seguintes:    
+
+Nestes dois exemplo, a variável environment aguarda ter o valor "production" para ser true e setar duas intâncias. No segundo exemplo, se for true, setará 2 + o valor da variável 'plus'.
+
+* `count = var.environment == "production" ? 2 : 1`  
+* `count = var.environment == "production" ? 2 + var.plus : 1`   
+
+Abaixo, a variável production espera ser true para setar 2 instâncias. Como é false, seta apenas 1. É a simplificação dis cinabdis acima.
+  
+* `count = var.production ? 2 : 1`  
+
+Neste caso, com o "!" é a negação da expressão que esperaria o resultado como false, como é diferente de false ela retorna true e cria 2 instâncias. Evitar usa esse tipo de expressão. 
+* `count = !var.production ? 2 : 1`  
+
+O `count.index` armazenará um índice para cada instância criada na variável  `count`. Cada índice no exemplo acima é uma instância criada.  
+* ` instance_type = count.index > 1 ? "t2.micro" : "t3.medium"`
 
