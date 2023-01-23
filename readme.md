@@ -310,5 +310,17 @@ Neste caso, com o "!" é a negação da expressão que esperaria o resultado com
 * `count = !var.production ? 2 : 1`  
 
 O `count.index` armazenará um índice para cada instância criada na variável  `count`. Cada índice no exemplo acima é uma instância criada.  
-* ` instance_type = count.index > 1 ? "t2.micro" : "t3.medium"`
+* ` instance_type = count.index > 1 ? "t2.micro" : "t3.medium"`    
+
+
+### Type constraints   
+
+
+Documentação: https://developer.hashicorp.com/terraform/language/expressions/type-constraints   
+
+### Laço for_each 
+
+O `for_each` é utilizado dentro do blobo __resource__. Ele é um outra maneira de fazer o `count`, porém ele é apropriado quando quisermos passar valores diferentes para as variáveis a cada iteração.
+
+
 
