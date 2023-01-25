@@ -45,7 +45,7 @@ resource "aws_iam_policy" "policy" {
   name        = "test-policy"
   description = "A test policy"
 
-// Policy para Adminstrator Access
+  // Policy para Adminstrator Access
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -62,9 +62,9 @@ EOF
 
 
 resource "aws_iam_policy_attachment" "test-attach" {
-  name       = "test-attachment"
-  users      = [aws_iam_user.tst.name]
-  roles      = [aws_iam_role.role.name]
+  name  = "test-attachment"
+  users = [aws_iam_user.tst.name]
+  roles = [aws_iam_role.role.name]
   // groups     = [aws_iam_group.group.name]
   policy_arn = aws_iam_policy.policy.arn
 }

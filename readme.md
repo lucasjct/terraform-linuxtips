@@ -320,7 +320,46 @@ Documentação: https://developer.hashicorp.com/terraform/language/expressions/t
 
 ### Laço for_each 
 
-O `for_each` é utilizado dentro do blobo __resource__. Ele é um outra maneira de fazer o `count`, porém ele é apropriado quando quisermos passar valores diferentes para as variáveis a cada iteração.
+O `for_each` é utilizado dentro do blobo __resource__. Ele é outra maneira de fazer o `count`, porém ele é apropriado quando quisermos passar *valores diferentes* para as variáveis a cada iteração. O `for_each` pode iterar dentro de um tipo __set__ ou __object__.   
 
+Para utilizá-lo, devemos criar primeiro a variável com o tipo *list*, informar o tipo de dado que será passado na lista e qual será nosso default, conforme vemos abaixo no exemplo com a variável __instance_type__.   
 
+```ruby
+variable "instance_type" {
 
+  type        = list(string)
+  default     = ["t2.micro", "t3.medium"]
+  description = "The list of instance type"
+
+}
+```  
+
+Como mecncionamos, assim como o `count` ou  `for_each` é informado dentro do bloco resource. Como pode observsar abaixo, temos duas variáveis que vão interagir com o for_each.  
+
+A primeira `for_each`, recebe a variável `instance_type` como um `set` que aponta para os tipos de instâncias dentro de uma lista de strings. A segunda variável, é também  `instance_type` que aplica o valor de cada iteração do laço de repetição. Para atribuir os valores da iteração para instace_type, utiliza-se as palavras reservadas __each__ e __value__: 
+ 
+```ruby
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.server-ubuntu.id
+  for_each      = toset(var.instance_type)
+  instance_type = each.value
+
+  tags = {
+    "Name" = "Create with loop for"
+  }
+
+}
+``` 
+
+O tratamento do bloco __output__ também precisa ser adaptado no `for_each`. Definimos a variável `instance` para varrer o recurso `aws_instance` e retornar o __id__ mais o __private_ip__ na linha de comando:  
+
+```ruby
+output "ip_adresss" {
+
+  value = {
+    for instance in aws_instance.web :
+    instance.id => instance.private_ip
+  }
+
+}
+```
