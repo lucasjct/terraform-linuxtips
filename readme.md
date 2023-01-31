@@ -362,4 +362,8 @@ output "ip_adresss" {
   }
 
 }
-```
+```  
+
+### Dynamic Blocs   
+
+Documentação: https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks
