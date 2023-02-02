@@ -2,7 +2,9 @@
 
 ### Executar com Docker
 
-docker run -it -v /c/Users/AS/workspace/terraform-linuxtips:/app -w /app --entrypoint  hashicorp/terraform:light sh
+`docker run -it -v <seu workspace>/terraform-linuxtips:/app -w /app --entrypoint  hashicorp/terraform:light sh`
+
+
 
 ## Day - 1
 
@@ -26,24 +28,27 @@ Liberar o console Terraform  para interagir com as expressões do terraform
 * `terraform console`
 
 
-### Documentação
+### Documentação consulta geral
 
 * Providers que se integram com terrraform:   
 https://registry.terraform.io/browse/providers   
 
-* Documentação sobre a sintaxe da linguagem HCL  
+* Documentação sobre a sintaxe da linguagem HCL    
 https://developer.hashicorp.com/terraform/language/providers/requirements
 
 * Documentação de como aplicar os recursos do provider:    
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs    
 
 
+### Variáveis   
+
 * Definições de variáveis no Terrform  
-Documentação: https://developer.hashicorp.com/terraform/language/values  
+Documentação: https://developer.hashicorp.com/terraform/language/values      
+
+
 
 
 ### Como funcionam as chamadas para API da AWS com Terraform   
-
 
 ![img](./img/call-for-api-aws.png)   
 
