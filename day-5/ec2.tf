@@ -18,7 +18,7 @@ resource "aws_instance" "web_server" {
 // bloco dinamico serve para criarmos recursos aninhados
 // no exemplo abaixo, temos alguns volumes EBS que serão anexados
 // a máquina EC2. Para especificá-los usamos o arquivo terraform.tfvars 
-// e especificamos o tipo da variável no variables.tf
+// e especificamos o tipo da variável no variables.tf 
 
   dynamic "ebs_block_device" {
     for_each = var.blocks

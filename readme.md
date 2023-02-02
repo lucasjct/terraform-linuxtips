@@ -366,4 +366,104 @@ output "ip_adresss" {
 
 ### Dynamic Blocs   
 
-Documentação: https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks
+Documentação: https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks     
+
+O blocos dinâmicos servem para quando temos recursos aninhados. Por exemplo, na criação de uma máquina EC2, podemos definir um volume EBS para ser anexado nesta máquina. Como pode ser definido vários volumes para uma EC2, posso utilizar o bloco dinâmico para isso.   
+
+Para executar o bloco dinâmico, é necessário o `for_each`, a configuração do arquivo `terraform.tfvars` e nas `variables.tf` definir o nome e o tipo da variável utilizada no bloco dinâmico.  
+
+Vejamos o exemplo abaixo:  
+
+`ec2.tf`   
+
+```ruby
+resource "aws_instance" "web_server" {
+
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+
+// bloco dinamico serve para criarmos recursos aninhados
+// no exemplo abaixo, temos alguns volumes EBS que serão anexados
+// a máquina EC2. Para especificá-los usamos o arquivo terraform.tfvars 
+// e especificamos o tipo da variável no variables.tf 
+// "ebs_block_device" é nome do recurso transformado em bloco dinâmico.
+
+  dynamic "ebs_block_device" {
+    for_each = var.blocks
+
+    content {
+      volume_type = ebs_block_device.value["volume_type"]
+      volume_size = ebs_block_device.value["volume_size"]
+      device_name = ebs_block_device.value["device_name"]
+    }
+
+  }
+
+}   
+```
+
+`terraform.tfvars`
+Definição extada do se espera nas propriedades do __ebs_block_device__ dentro da lista de objetos chamada de __blocks__.
+
+```json
+blocks = [
+
+  {
+    volume_type : "gp2",
+    volume_size : 5,
+    device_name : "/dev/sdg"
+  },
+  {
+    volume_type : "gp2",
+    volume_size : 10,
+    device_name : "/dev/sdh"
+  }
+]
+```   
+
+`variables.tf`  
+Definição do type constraint da variável.   
+
+```ruby 
+variable "blocks" {
+
+  type = list(object({
+    volume_type : string,
+    volume_size = string,
+    device_name = string
+  }))
+
+  description = "volumns config for EBS"
+}
+```
+
+
+### String Templates  
+
+Documentação: https://developer.hashicorp.com/terraform/language/expressions/strings  
+
+Em String Templates, aprendemos a fazer interpoçaão de strings no terraform, como mostra os exemplos abaixo.  
+
+```ruby 
+    // exemplo de interpolação de strings
+    // "Name" = "hello ${var.name}" 
+
+
+
+    // Exemplo de interpolação com condicional
+    "Name" = "Hello %{if var.name == "Testando interpolção"}${var.name}%{else}Var name diferente do esperado%{endif}!"
+```   
+
+
+### Terraform Cloud (SaaS)
+
+Documentação: https://cloud.hashicorp.com/products/terraform   
+
+#### Workspace
+
+É o método de organização elementar do Terraform Cloud.   
+ https://developer.hashicorp.com/terraform/cloud-docs/workspaces  
+
+ Diferenças entre a execução local do Terraform e sua execução no ambiente do Terraform Cloud:   
+
+ <table><thead><tr><th>Component</th><th>Local Terraform</th><th>Terraform Cloud</th></tr></thead><tbody><tr><td>Terraform configuration</td><td>On disk</td><td>In linked version control repository, or periodically uploaded via API/CLI</td></tr><tr><td>Variable values</td><td>As <code class="mdx-inline-code_inlineCode__mRRzk hds-typography-code-200">.tfvars</code> files, as CLI arguments, or in shell environment</td><td>In workspace</td></tr><tr><td>State</td><td>On disk or in remote backend</td><td>In workspace</td></tr><tr><td>Credentials and secrets</td><td>In shell environment or entered at prompts</td><td>In workspace, stored as sensitive variables</td></tr></tbody></table>   

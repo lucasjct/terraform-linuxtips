@@ -6,8 +6,6 @@ variable "aws_ami_ubuntu" {
 
 }
 
-
-
 variable "blocks" {
 
   type = list(object({
