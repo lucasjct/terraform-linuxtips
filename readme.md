@@ -57,12 +57,12 @@ variable "ec2_type" {
   description = "instance for tests"
 }
 ```
-__Meta argumentos__ das variáveis:  
+__Meta argumentos__ das variáveis:   
 
 
-Com __type__ definimos o type constraint da variável. 
-Com o __default__ setamos o valor da variável.  
-Com __description__ informamos como boa prática, o que a variável faz e seu motivo.     
+Com __type__ definimos o type constraint, a restrição do tipo de valor que a variável deve receber.      
+Com o __default__ setamos o valor da variável.        
+Com __description__ informamos como boa prática, o que a variável faz e seu motivo.       
 
 ##### Definir variável com validação do valor informado 
 
@@ -452,7 +452,7 @@ resource "aws_instance" "web_server" {
 `terraform.tfvars`
 Definição extada do se espera nas propriedades do __ebs_block_device__ dentro da lista de objetos chamada de __blocks__.
 
-```json
+```javascript
 blocks = [
 
   {
