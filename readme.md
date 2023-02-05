@@ -45,6 +45,48 @@ https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 * Definições de variáveis no Terrform  
 Documentação: https://developer.hashicorp.com/terraform/language/values      
 
+Para declararmos as variáveis, por boas práticas, devemos criar uma arquivo chamado `variables.tf` lá declararemos as variáveis. Elas não precisam ser importados no arquivo do recurso da cloud que estou implementando, o Terraform entende sem a necessidade de importar.   
+
+Como declaramos da maneira mais simples:    
+
+```ruby
+variable "ec2_type" {
+
+  type = string
+  default = "t3.micro"
+  description = "instance for tests"
+}
+```
+__Meta argumentos__ das variáveis:  
+
+
+Com __type__ definimos o type constraint da variável. 
+Com o __default__ setamos o valor da variável.  
+Com __description__ informamos como boa prática, o que a variável faz e seu motivo.     
+
+##### Definir variável com validação do valor informado 
+
+Abaixo, um exemplo em que usamos o __meta argumento__ __validation__. Nele podemos criar uma condição para nos assegurarmos que o valor informado na variáel, cumpre critérios estabelecidos.  No exemplo abaixo, temos duas condições, a primeira é que o valor tenha de __ec2_instance__ tenha mais que 4 strings e que este tenha "micro" informado entre a string informada. 
+
+```ruby
+variable "ec2_instance" {
+
+  type        = string
+  default     = "t2.micro"
+  description = "set value for instance"
+
+  // validação para garantir que a instância aplicada seja um micro
+  validation {
+    condition     = length(var.ec2_instance) > 4 && substr(var.ec2_instance, 3, 7) == "micro"
+    error_message = "the value for ec2 should be t2.micro"
+  }
+
+}
+```
+
+
+
+
 
 
 
