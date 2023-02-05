@@ -17,14 +17,13 @@ Obter ajuda
 Instala os plugins disponíveis no terraform
 * `terraform init -upgrade`
 
-Utiliza o arquivo state em memória 
-* `terraform plan -out <nome-arquivo>` 
+Utiliza o arquivo state em memória, como ele temos a garantia exata de que aquilo que é apresentado no `tfstate` 
+* `terraform plan -out <nome-arquivo>`   
 
-Aplicar o plano 
-
-* `terraform apply <nome-arquivo>`   
-
-Liberar o console Terraform  para interagir com as expressões do terraform
+Para aplicar o state que em memória.   
+* `terraform apply -out <nome-arquivo>` 
+ 
+Liberar o console Terraform  para interagir com as expressões do Terraform. Como por exemplo, obter o valor de uma variável que foi informada.  
 * `terraform console`
 
 
@@ -64,9 +63,10 @@ Com __type__ definimos o type constraint, a restrição do tipo de valor que a v
 Com o __default__ setamos o valor da variável.        
 Com __description__ informamos como boa prática, o que a variável faz e seu motivo.       
 
-##### Definir variável com validação do valor informado 
+##### Definir variável com validação do valor 
 
 Abaixo, um exemplo em que usamos o __meta argumento__ __validation__. Nele podemos criar uma condição para nos assegurarmos que o valor informado na variáel, cumpre critérios estabelecidos.  No exemplo abaixo, temos duas condições, a primeira é que o valor tenha de __ec2_instance__ tenha mais que 4 strings e que este tenha "micro" informado entre a string informada. 
+
 
 ```ruby
 variable "ec2_instance" {
@@ -82,9 +82,35 @@ variable "ec2_instance" {
   }
 
 }
+```   
+
+##### Setar valores das variáveis pela linha de comando    
+
+No exemplo acima temos a variável __ec2_type__ para setar outro valor na linha de comando, devemos executar:  
+
+
+* `terraform plan -var ec2_type="t3.micro"`    
+* `terraform apply -var ec2_type="t3.micro"`   
+
+#### Definindo variáveis com o arquivo `variables.tfvars`   
+
+Neste exemplo, podemos definir um arquivo específico para declarar as variáveis que serão utilizadas no projeto. 
+
+```ruby
+image_id = "ami-5451203"   
+
+availability_zone_names = [
+  "us-east-1a",
+  "us-east-1a"
+]
 ```
 
+Após definir as variáveis, como no exemplo acima, nós executamos pela linha de comando:  
 
+* `terraform plan -var-file="variables.tfvars"`   
+* `terraform apply -var-file="variables.tfvars"`     
+
+Podemos criar ainda um arquivo `variables.auto.tfvars`. A diferença é que no momento de executar o `terraform plan`e o `terraform apply`, automaticamente os valores das variáveis declaradas no arquivo `variables.auto.tfvars` sem precisar especificar o path com `terraform apply -var-file="variables.tfvars"`. 
 
 
 
@@ -180,7 +206,7 @@ terraform não funciona sem state. Por que ele existe?
 `terraform refresh` - Caso seja realizado alguma modificação manual no cloud provider, com esse comando, o terraform vai na cloud, mapeia a alteração e o arquivo state é atualizado.   
 * Sincronia, quando temos várias pessoas estão manipulando o mesmo recurso, quando utilizamos o __remote state__, não há necessidade de fazer o refresh de todo state novamente, cada pessoa terá uma cópia da última modificação no Terraform.   
 
-O Terraform possui outras opções na linha de comando para manipular o tstate. Eles são: `terraform state <opções abaixo>` :  
+O Terraform possui outras opções na linha de comando para manipular o tfstate. Eles são: `terraform state <opções abaixo>` :  
 * `list`
 * `mv`
 * `pull`
